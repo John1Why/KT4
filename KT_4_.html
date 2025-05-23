@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .slider{
+        border-radius: 5px;
+        background-color: rgb(42, 165, 144);
+        background: linear-gradient(left top, green, blue);
+        width: 310px;
+        height: 15px;
+        margin: 20px;
+    }
+
+    .thumb{
+        width: 10px;
+        height: 25px;
+        border-radius: 3px;
+        position: relative;
+        left: 10px;
+        top: -5px;
+        background: rgb(31, 127, 111);
+        cursor: pointer;
+    }
+    .num{
+        padding-top: 25px;
+    }
+</style>
+<body>
+    <div id="slider" class="slider">
+        <div class="thumb"><p class="num" id="num">x=10px</p></div>
+    </div>
+    <script>
+    let thumb = slider.querySelector('.thumb')
+    thumb.onpointerdown = function(event){
+        thumb.setPointerCapture(event.pointerId)
+
+        thumb.onpointermove = function(event) {
+            if(slider.getBoundingClientRect().left <= event.clientX && (slider.getBoundingClientRect().right- 10) >= event.clientX){
+            let newLeft = event.clientX - slider.getBoundingClientRect().left
+            thumb.style.left = newLeft + 'px'
+            document.getElementById("num").innerHTML = 'x='+ Math.trunc(newLeft) + 'px'
+            }
+        }
+
+        thumb.onpointerup = function(event){
+            thumb.onpointermove = null
+            thumb.onpointerup = null
+        }
+    }
+    console.log(slider.getBoundingClientRect())
+</script>
+</body>
+</html>
